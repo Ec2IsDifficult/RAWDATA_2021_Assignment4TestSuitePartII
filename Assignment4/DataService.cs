@@ -10,14 +10,23 @@ namespace Assignment4
 {
     public interface IDataService
     {
-        IList<Category> GetCategories();
-        IList<Product> GetProducts();
-        IList<Order> GetOrders();
-        IList<OrderDetails> GetOrderDetails();
-
+        public IList<Category> GetCategories();
+        public Category GetCategory(int id);
+        public Category CreateCategory(String name, String desc);
+        public bool DeleteCategory(int id);
+        public bool UpdateCategory(int id, string name, string desc);
+        public IList<Product> GetProducts();
+        public Product GetProduct(int id);
+        public IList<Product> GetProductByCategory(int id);
+        public IEnumerable<Product> GetProductByName(string searchString);
+        public IList<Order> GetOrders();
+        public Order GetOrder(int id);
+        public IList<OrderDetails> GetOrderDetails();
+        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int id);
+        public IEnumerable<OrderDetails> GetOrderDetailsByProductId(int id);
     }
 
-    public class DataService
+    public class DataService : IDataService
     {
         private static NorthwindContext _ctx = new NorthwindContext();
 
@@ -34,7 +43,7 @@ namespace Assignment4
 
         public Category CreateCategory(String name, String desc)
         {
-            Category newCategory = new Category(GetCategories().Count + 1, name, desc);
+            Category newCategory = new Category(GetCategories().Count() + 1, name, desc);
             _ctx.Add(newCategory);
             _ctx.SaveChanges();
             return newCategory;
