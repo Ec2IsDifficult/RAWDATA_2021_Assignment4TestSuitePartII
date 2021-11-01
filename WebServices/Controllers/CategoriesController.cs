@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebServices.ViewModels;
-using WebServices.ViewModels.WebServices.ViewModels;
 
 namespace WebServices.Controllers
 {
@@ -61,8 +60,23 @@ namespace WebServices.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateCategory(int id, [FromBody] CategoryViewModel updatedCategory)
         {
-            _dataService.UpdateCategory(id, updatedCategory.Name, updatedCategory.Description);
-            return Ok();
+            if (_dataService.GetCategory(id) != null)
+            {
+                _dataService.UpdateCategory(id, updatedCategory.Name, updatedCategory.Description);
+                return Ok();
+            }
+            return NotFound();
+        }
+        
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCategory(int id)
+        {
+            if (_dataService.GetCategory(id) != null)
+            {
+                _dataService.DeleteCategory(id);
+                return Ok();
+            }
+            return NotFound();
         }
         
         private CategoryViewModel CreateCategoryViewModel(Category category)

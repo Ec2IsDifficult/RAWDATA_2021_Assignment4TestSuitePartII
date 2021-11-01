@@ -18,6 +18,7 @@ namespace Assignment4.Tests
         private const string ProductsApi = "http://localhost:5001/api/products";
 
         /* /api/categories */
+//Passed on postman
 
         [Fact]
         public void ApiCategories_GetWithNoArguments_OkAndAllCategories()
@@ -29,6 +30,7 @@ namespace Assignment4.Tests
             Assert.Equal("Beverages", data.First()["name"]);
             Assert.Equal("Seafood", data.Last()["name"]);
         }
+//Passed on postman
 
         [Fact]
         public void ApiCategories_GetWithValidCategoryId_OkAndCategory()
@@ -38,6 +40,7 @@ namespace Assignment4.Tests
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("Beverages", category["name"]);
         }
+//Passed on postman
 
         [Fact]
         public void ApiCategories_GetWithInvalidCategoryId_NotFound()
@@ -46,6 +49,7 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
+//Passed on postman
 
         [Fact]
         public void ApiCategories_PostWithCategory_Created()
@@ -61,7 +65,7 @@ namespace Assignment4.Tests
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
         }
-
+//Passed on postman
         [Fact]
         public void ApiCategories_PutWithValidCategory_Ok()
         {
@@ -91,7 +95,7 @@ namespace Assignment4.Tests
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
         }
-
+//Passed on postman
         [Fact]
         public void ApiCategories_PutWithInvalidCategory_NotFound()
         {
@@ -107,6 +111,7 @@ namespace Assignment4.Tests
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
 
+//Passed on postman        
         [Fact]
         public void ApiCategories_DeleteWithValidId_Ok()
         {
@@ -122,7 +127,7 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
         }
-
+//Passed on postman
         [Fact]
         public void ApiCategories_DeleteWithInvalidId_NotFound()
         {
