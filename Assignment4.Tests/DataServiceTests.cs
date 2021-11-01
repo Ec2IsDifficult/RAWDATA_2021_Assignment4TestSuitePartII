@@ -194,15 +194,15 @@ namespace Assignment4.Tests
             Assert.Equal(12, orderDetails.First().Quantity);
         }
 
-/*        [Fact]
+        [Fact]
         public void GetOrderDetailByProductId_ValidId_ReturnsOrderDateUnitPriceAndQuantity()
         {
             var service = new DataService();
             var orderDetails = service.GetOrderDetailsByProductId(11);
-            Assert.Equal(38, orderDetails.Count);
+            Assert.Equal(38, orderDetails.Count());
             Assert.Equal("1997-05-06", orderDetails.First().Order.Date.ToString("yyyy-MM-dd"));
             Assert.Equal(21, orderDetails.First().UnitPrice);
             Assert.Equal(3, orderDetails.First().Quantity);
-        }*/
+        }
     }
 }

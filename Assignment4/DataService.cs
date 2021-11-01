@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -10,20 +11,20 @@ namespace Assignment4
 {
     public interface IDataService
     {
-        public IList<Category> GetCategories();
-        public Category GetCategory(int id);
-        public Category CreateCategory(String name, String desc);
-        public bool DeleteCategory(int id);
-        public bool UpdateCategory(int id, string name, string desc);
-        public IList<Product> GetProducts();
-        public Product GetProduct(int id);
-        public IList<Product> GetProductByCategory(int id);
-        public IEnumerable<Product> GetProductByName(string searchString);
-        public IList<Order> GetOrders();
-        public Order GetOrder(int id);
-        public IList<OrderDetails> GetOrderDetails();
-        public IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int id);
-        public IEnumerable<OrderDetails> GetOrderDetailsByProductId(int id);
+        IList<Category> GetCategories();
+        Category GetCategory(int id);
+        Category CreateCategory(String name, String desc);
+        bool DeleteCategory(int id);
+        bool UpdateCategory(int id, string name, string desc);
+        IList<Product> GetProducts();
+        Product GetProduct(int id);
+        IList<Product> GetProductByCategory(int id);
+        IEnumerable<Product> GetProductByName(string searchString);
+        IList<Order> GetOrders();
+        Order GetOrder(int id);
+        IList<OrderDetails> GetOrderDetails();
+        IEnumerable<OrderDetails> GetOrderDetailsByOrderId(int id);
+        IEnumerable<OrderDetails> GetOrderDetailsByProductId(int id);
     }
 
     public class DataService : IDataService
@@ -43,11 +44,10 @@ namespace Assignment4
 
         public Category CreateCategory(String name, String desc)
         {
-            Category newCategory = new Category(GetCategories().Count() + 1, name, desc);
+            Category newCategory = new Category(GetCategories().Count + 1, name, desc);
             _ctx.Add(newCategory);
             _ctx.SaveChanges();
             return newCategory;
-
         }
 
         public bool DeleteCategory(int id)
@@ -125,7 +125,8 @@ namespace Assignment4
 
         public IEnumerable<OrderDetails> GetOrderDetailsByProductId(int id)
         {
-            return null;
+            return _ctx.OrderDetails.Include(x => x.Order)
+                .Include(x => x.Product).Where(x => x.ProductId == id);
         }
     }
 }
