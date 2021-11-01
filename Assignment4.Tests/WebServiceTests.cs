@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Assignment4.Tests
 {
@@ -110,7 +113,6 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
-
 //Passed on postman        
         [Fact]
         public void ApiCategories_DeleteWithValidId_Ok()
@@ -138,7 +140,7 @@ namespace Assignment4.Tests
         }
 
         /* /api/products */
-
+//Passed on postman
         [Fact]
         public void ApiProducts_ValidId_CompleteProduct()
         {
@@ -148,7 +150,7 @@ namespace Assignment4.Tests
             Assert.Equal("Chai", product["name"]);
             Assert.Equal("Beverages", product["category"]["name"]);
         }
-
+//Passed on postman
         [Fact]
         public void ApiProducts_InvalidId_CompleteProduct()
         {
@@ -156,7 +158,7 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
-
+//Passed on postman
         [Fact]
         public void ApiProducts_CategoryValidId_ListOfProduct()
         {
@@ -166,9 +168,9 @@ namespace Assignment4.Tests
             Assert.Equal(12, products.Count);
             Assert.Equal("Chai", products.First()["name"]);
             Assert.Equal("Beverages", products.First()["categoryName"]);
-            Assert.Equal("Lakkalikööri", products.Last()["name"]);
+            Assert.Equal("LakkalikÃ¶Ã¶ri", products.Last()["name"]);
         }
-
+//Passed on postman
         [Fact]
         public void ApiProducts_CategoryInvalidId_EmptyListOfProductAndNotFound()
         {
@@ -177,7 +179,7 @@ namespace Assignment4.Tests
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
             Assert.Equal(0, products.Count);
         }
-
+//Passed on postman
         [Fact]
         public void ApiProducts_NameContained_ListOfProduct()
         {
@@ -185,21 +187,18 @@ namespace Assignment4.Tests
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal(4, products.Count);
-            Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First()["productName"]);
+            Assert.Equal("NuNuCa NuÃŸ-Nougat-Creme", products.First()["productName"]);
             Assert.Equal("Flotemysost", products.Last()["productName"]);
         }
-
+//Passed on postman
         [Fact]
         public void ApiProducts_NameNotContained_EmptyListOfProductAndNotFound()
         {
             var (products, statusCode) = GetArray($"{ProductsApi}/name/RAWDATA");
-
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
             Assert.Equal(0, products.Count);
         }
-
-
-
+        
         // Helpers
 
         (JArray, HttpStatusCode) GetArray(string url)

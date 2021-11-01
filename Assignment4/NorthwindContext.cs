@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using System.Text;
 using Assignment4.Domain;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Assignment4
 {
@@ -15,9 +17,8 @@ namespace Assignment4
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.LogTo((Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information));
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseNpgsql("host=localhost;db=northwind;uid=postgres;pwd=Pedal14");
+            optionsBuilder.UseNpgsql("host=localhost;db=northwindfinalfinal;uid=postgres;pwd=Pedal14;Encoding=UTF-8;");
         }
 
 
@@ -32,7 +33,7 @@ namespace Assignment4
             modelBuilder.Entity<Category>().Property(x => x.Description).HasColumnName("description");
             modelBuilder.Entity<Category>().HasKey(x => x.Id);
             //modelBuilder.Entity<Category>().HasMany(x => x.ProductsList).WithOne().IsRequired();
-            
+
             //Product mapping
             modelBuilder.Entity<Product>().ToTable("products");
             modelBuilder.Entity<Product>().Property(x => x.Id).HasColumnName("productid");

@@ -96,7 +96,7 @@ namespace Assignment4
 
         public IEnumerable<Product> GetProductByName(string searchString)
         {
-            return _ctx.Products.Where(x => x.ProductName.Contains(searchString));
+            return _ctx.Products.Where(x => x.ProductName.Contains(searchString)).Include(x => x.Category);
         }
 
         //Order functionality 
